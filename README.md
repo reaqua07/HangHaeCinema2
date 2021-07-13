@@ -49,35 +49,35 @@
 
 | 기능               | method | URL               | 작업현황 |
 | ------------------ | ------ | ----------------- | -------- |
-| 회원가입           | POST   | /signup           | ❌        |
+| 회원가입           | POST   | /signup           | ⭕        |
 | 회원 중복 확인하기 | get    | /signup/{email}   | ❌        |
 | 회원 정보 수정하기 | put    | /user/update/{id} | ❌        |
-| 로그인             | POST   | /login            | ❌        |
+| 로그인             | POST   | /login            | ⭕        |
 | 로그아웃           |        | /logout           | ❌        |
 
 * #### 🎬 영화
 
-| 기능               | method | URL     | 반환 |
+| 기능               | method | URL     | 작업현황 |
 | ------------------ | ------ | ------- | ---- |
 | 영화 목록 크롤링   | GET    |         | ❌    |
 | 영화 목록 불러오기 | GET    | /movies | ❌    |
 
 * #### 📃 리뷰
 
-| 기능               | method | URL                      | 반환 |
+| 기능               | method | URL                      | 작업현황 |
 | ------------------ | ------ | ------------------------ | ---- |
-| 리뷰 작성하기      | POST   | /api/reviews             | ❌    |
-| 리뷰 목록 불러오기 | GET    | /api/reviews/{id}        | ❌    |
+| 리뷰 작성하기      | POST   | /api/reviews             | ⭕    |
+| 리뷰 목록 불러오기 | GET    | /api/reviews/{id}        | ⭕    |
 | 리뷰 수정하기      | PUT    | /api/reviews/update/{id} | ❌    |
 | 리뷰 삭제하기      | PUT    | /api/reviews/delete/{id} | ❌    |
 
 * #### ❤️ 좋아요
 
-| 기능                 | method | URL            | 반환 |
+| 기능                 | method | URL            | 작업현황 |
 | -------------------- | ------ | -------------- | ---- |
-| 좋아요 갯수 가져오기 | GET    | /api/like/{id} | ❌    |
-| 좋아요 누르기        | POST   | /api/like/{id} | ❌    |
-| 좋아요 취소하기      | DELETE | /api/like/{id} | ❌    |
+| 좋아요 갯수 가져오기 | GET    | /api/like/{id} | ⭕    |
+| 좋아요 누르기        | POST   | /api/like/{id} | ⭕    |
+| 좋아요 취소하기      | DELETE | /api/like/{id} | ⭕    |
 
 
 

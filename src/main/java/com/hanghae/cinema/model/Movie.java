@@ -3,7 +3,6 @@ package com.hanghae.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -34,20 +33,14 @@ public class Movie extends Timestamped{
     @Column(nullable = false)
     private String img;
 
-    public Movie( String title, String star, String movie_code, String img) {
+    public Movie(String title, String star, String movie_code, String img) {
         this.title=title;
         this.star=star;
         this.moviecode = movie_code;
         this.img =img;
     }
 
-//    public Movie(MovieDto movieDto) {
-//        this.title = movieDto.getTitle();
-//        this.star = movieDto.getStar();
-//        this.img = movieDto.getImg();
-//        this.moviecode = movieDto.getMovie_code();
-//    }
-//
+
 //    @Column(nullable = false)
 //    private String genre;
 //
