@@ -22,7 +22,6 @@ public class MemberController {
     @GetMapping("/me")
     public ResponseEntity<MemberResponseDto> getMyMemberInfo() {
 
-        System.out.println("값받아"+ResponseEntity.ok(memberService.getMyInfo()));
         return ResponseEntity.ok(memberService.getMyInfo());
     }
 
