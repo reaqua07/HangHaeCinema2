@@ -23,17 +23,18 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
     @Builder
-    public Member(String email, String password, Authority authority) {
+    public Member(String email, String password, String nickname, Authority authority) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
         this.authority = authority;
-
-//    @Column(nullable = false)
-//    private String nickname;
 
 
     }
