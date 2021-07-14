@@ -12,5 +12,7 @@ public class MovieDto {
     private String title;
     private String star;
     private String movie_Code;
+
     private String img;
+    private String plot;
 }

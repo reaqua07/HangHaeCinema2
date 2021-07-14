@@ -5,6 +5,7 @@ import com.hanghae.cinema.model.LikeReview;
 import com.hanghae.cinema.repository.LikeRepository;
 import com.hanghae.cinema.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,18 +26,13 @@ public class LikeController {
     }
 
     @PostMapping("/api/like")
-    public String clickLike(@RequestBody LikeResponseDto likeResponseDto){
-        likeResponseDto.setUser("zz");
-
-        System.out.println(likeResponseDto.getReview());
-        System.out.println(likeResponseDto.getUser());
+    public ResponseEntity<Void> clickLike(@RequestBody LikeResponseDto likeResponseDto){
         likeService.clickLike(likeResponseDto);
-        return "like";
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/api/like")
     public String deleteLike(@RequestBody LikeResponseDto likeResponseDto){
-
         likeService.deleteLike(likeResponseDto);
         return "delete";
     }
