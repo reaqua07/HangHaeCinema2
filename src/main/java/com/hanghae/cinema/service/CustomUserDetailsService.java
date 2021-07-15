@@ -1,5 +1,6 @@
 package com.hanghae.cinema.service;
 
+import com.hanghae.cinema.exception.ApiRequestException;
 import com.hanghae.cinema.model.Member;
 import com.hanghae.cinema.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+    // 로그인 예외처리
+    // 아이디
     @Override
-    @Transactional
+    @Transactional                              // emial
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository.findByEmail(username)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+                .orElseThrow(() -> new ApiRequestException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴

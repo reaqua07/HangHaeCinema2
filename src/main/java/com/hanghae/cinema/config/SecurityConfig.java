@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final CorsConfig corsConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-            .antMatchers("/h2-console/**", "/favicon.ico");
+                .antMatchers("/h2-console/**", "/favicon.ico");
     }
 
     @Override
@@ -38,55 +39,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // CSRF 설정 Disable
         http.csrf().disable()
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-            .addFilter(corsConfig.corsFilter())
-<<<<<<< HEAD
-=======
+                .addFilter(corsConfig.corsFilter())
 
->>>>>>> 38aef4f1852ada787943928f0f552c9cbd837fe0
-            // exception handling 할 때 우리가 만든 클래스를 추가
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(jwtAccessDeniedHandler)
-<<<<<<< HEAD
-            .and()
-=======
-            // jwt 인증입니다. 세션 사용하지 않음
-            .and()
+                // exception handling 할 때 우리가 만든 클래스를 추가
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
 
->>>>>>> 38aef4f1852ada787943928f0f552c9cbd837fe0
-            // h2-console 을 위한 설정을 추가
-            .headers()
-            .frameOptions()
-            .sameOrigin()
-<<<<<<< HEAD
-=======
+                // jwt 인증입니다. 세션 사용하지 않음
+                .and()
 
->>>>>>> 38aef4f1852ada787943928f0f552c9cbd837fe0
-            // 시큐리티는 기본적으로 세션을 사용
-            // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-<<<<<<< HEAD
-=======
+                // h2-console 을 위한 설정을 추가
+                .headers()
+                .frameOptions()
+                .sameOrigin()
 
->>>>>>> 38aef4f1852ada787943928f0f552c9cbd837fe0
-            // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
-            .and()
-            .authorizeRequests()
-            .antMatchers("/member/**").permitAll()
-<<<<<<< HEAD
-            .antMatchers("api/movie").permitAll()
-            .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
-            // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
-=======
-            .antMatchers("/api/movie").permitAll()
-            .anyRequest().authenticated()
+                // 시큐리티는 기본적으로 세션을 사용
+                // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
+                .and()
+                .authorizeRequests()
+                .antMatchers("/member/**").permitAll()
+
+                .antMatchers("api/movie").permitAll()
+                .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
+                // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+
 //            .antMatchers("/").permitAll()
 
->>>>>>> 38aef4f1852ada787943928f0f552c9cbd837fe0
-            .and()
-            .apply(new JwtSecurityConfig(tokenProvider));
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider));
 
     }
+
+
 }

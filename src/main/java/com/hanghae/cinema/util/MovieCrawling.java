@@ -24,7 +24,7 @@ public class MovieCrawling {
 
 
     //     서버 실행과 동시에 크롤링 하겠다.
-    @PostConstruct
+//    @PostConstruct
     public List<CrawlingDto> movieListcrawling() throws Exception{
         String url = "https://movie.naver.com/movie/running/current.nhn";
         Document doc = Jsoup.connect(url).get();

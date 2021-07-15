@@ -4,6 +4,7 @@ import com.hanghae.cinema.dto.MemberRequestDto;
 import com.hanghae.cinema.dto.MemberResponseDto;
 import com.hanghae.cinema.dto.TokenDto;
 import com.hanghae.cinema.dto.TokenRequestDto;
+import com.hanghae.cinema.exception.ApiRequestException;
 import com.hanghae.cinema.jwt.TokenProvider;
 import com.hanghae.cinema.model.Member;
 import com.hanghae.cinema.model.RefreshToken;
@@ -26,10 +27,32 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    // 회원가입 예외처리
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+        // 이메일 예외처리
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+            throw new ApiRequestException("이미 가입되어 있는 유저입니다.");
+        }
+        else if(memberRequestDto.getEmail() == null){
+            throw new ApiRequestException("이메일은 필수 입력값입니다.");
+        }
+        else if(!memberRequestDto.getEmail().matches("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$")){
+            throw new ApiRequestException("올바른 이메일 형식이 아닙니다.");
+        }
+        // 닉네임 예외처리
+        if(memberRepository.existsByNickname(memberRequestDto.getNickname())){
+            throw new ApiRequestException("이미 사용 중인 별명입니다.");
+        }
+        else if(memberRequestDto.getNickname() == null){
+            throw new ApiRequestException("별명은 필수 입력값입니다.");
+        }
+        // 비밀번호 예외처리
+        if(memberRequestDto.getPassword() == null){
+            throw new ApiRequestException("비밀번호는 필수 입력값입니다.");
+        }
+        else if(!memberRequestDto.getPassword().matches("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\\\(\\\\)\\-_=+]).{8,16}$")){
+            throw new ApiRequestException("비밀번호는 숫자, 영문, 특수문자 각 1자리 이상 사용하여, 8자 이상 16자 이하로 설정하여야 합니다.");
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
@@ -64,7 +87,7 @@ public class AuthService {
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new ApiRequestException("Refresh Token 이 유효하지 않습니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
@@ -72,11 +95,11 @@ public class AuthService {
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+                .orElseThrow(() -> new ApiRequestException("로그아웃 된 사용자입니다."));
 
         // 4. Refresh Token 일치하는지 검사
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new ApiRequestException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
         // 5. 새로운 토큰 생성
